@@ -53,6 +53,7 @@ export default function ContextWrapper({ children }) {
       });
     });
   }, [savedEvents])
+  
   return (
     <GlobalContext.Provider value={{
         monthIndex,
