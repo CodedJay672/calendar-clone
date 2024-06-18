@@ -1,20 +1,33 @@
 import React, { useContext, useState } from 'react'
 import GlobalContext from '../context/GlobalContext'
 
+const labelClasses = [
+  "indigo",
+  "gray",
+  "green",
+  "blue",
+  "red",
+  "purple"
+];
+
 export default function EventModal() {
-  const { setShowEventModal, slcDay } = useContext(GlobalContext);
+  const { setShowEventModal, slcDay, dispatchCalEvents } = useContext(GlobalContext);
   const [ title, setTitle ] = useState('');
   const [ desc, setDesc ] = useState('');
-  const [ selectedLabel, setSelectedLabel ] = useState('indigo');
+  const [ selectedLabel, setSelectedLabel ] = useState(labelClasses[0]);
 
-  const labelClasses = [
-    "indigo",
-    "gray",
-    "green",
-    "blue",
-    "red",
-    "purple"
-  ];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dispatchPayload = {
+      title,
+      desc,
+      label: selectedLabel,
+      day: slcDay.valueOf(),
+      id: Date.now()
+    };
+    dispatchCalEvents({ type: "push", payload: dispatchPayload });
+    setShowEventModal(false);
+  }
 
   return (
     <div className='fixed top-0 left-0 flex justify-center items-center h-screen w-full'>
@@ -76,6 +89,15 @@ export default function EventModal() {
             ))}
           </div>
         </div>
+        <footer className='flex justify-end border-t p-3 mt-5'>
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 transition-all"
+            onClick={handleSubmit}
+          >
+            Save
+          </button>
+        </footer>
       </form>
     </div>
   )

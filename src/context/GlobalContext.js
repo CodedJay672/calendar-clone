@@ -10,6 +10,7 @@ const GlobalContext = createContext({
   setSlcDay: (day) => {},
   showEventModal: false,
   setShowEventModal: () => {},
+  dispatchCalEvents: ({type, payload}) => {},
 });
 
 export default GlobalContext;
