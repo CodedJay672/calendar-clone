@@ -29,6 +29,8 @@ export default function ContextWrapper({ children }) {
   const [slcDay, setSlcDay] = useState(dayjs());
   const [showEventModal, setShowEventModal] = useState(false);
   const [savedEvents, dispatchCalEvents] = useReducer(savedEventsReducer, [], initReducer);
+  const [selectedEvt, setSelectedEvt] = useState(null);
+  const [labels, setLabels] = useState([]);
 
   useEffect(() => {
     if (smallCalendarMonth !== null) {
@@ -40,6 +42,17 @@ export default function ContextWrapper({ children }) {
     localStorage.setItem('savedEvents', JSON.stringify(savedEvents));
   }, [savedEvents])
 
+  useEffect(() => {
+    setLabels((prev) => {
+      return [...new Set(savedEvents.map((evt) => evt.label))].map((label) => {
+        const currentLabel = prev.find((lbl) => lbl.label === label);
+        return {
+          label,
+          checked: currentLabel ? currentLabel.checked : true,
+        };
+      });
+    });
+  }, [savedEvents])
   return (
     <GlobalContext.Provider value={{
         monthIndex,
@@ -52,6 +65,10 @@ export default function ContextWrapper({ children }) {
         setShowEventModal,
         dispatchCalEvents,
         savedEvents,
+        setSelectedEvt,
+        selectedEvt,
+        setLabels,
+        labels,
       }}
     >
       {children}

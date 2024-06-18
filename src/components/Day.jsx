@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import GlobalContext from '../context/GlobalContext';
 
 export default function Day({ day, rowIdx }) {
-  const { setSlcDay, setShowEventModal, savedEvents } = useContext(GlobalContext);
+  const { setSlcDay, setShowEventModal, savedEvents, setSelectedEvt } = useContext(GlobalContext);
   const [ dayEvts, setDayEvts ] =  useState([]);
 
   useEffect(() => {
@@ -33,7 +33,10 @@ export default function Day({ day, rowIdx }) {
       </header>
       <div className="flex-1 cursor-pointer" onClick={handleClick}>
         {dayEvts.map((evt, idx) => (
-          <div key={idx} className={`bg-${evt.label}-500 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}>
+          <div key={idx} 
+            className={`bg-${evt.label}-100 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}
+            onClick={() => setSelectedEvt(evt)}
+          >
             {evt.title}
           </div>
         ))}
