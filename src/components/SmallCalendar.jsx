@@ -32,10 +32,11 @@ export default function SmallCalendar() {
     const format = 'DD-MM-YY';
     const currentDay = dayjs().format(format);
     const thisDay = day.format(format);
+    const slcDayFormatted = slcDay && slcDay.format(format);
 
     if (currentDay === thisDay) {
       return 'bg-blue-500 text-white rounded-full'
-    } else if (slcDay && slcDay.format(format) === thisDay) {
+    } else if (slcDayFormatted === thisDay) {
       return 'bg-blue-100 text-blue-600 rounded-full'
     } else {
       return ''

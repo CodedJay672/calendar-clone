@@ -1,10 +1,18 @@
 import dayjs from 'dayjs'
-import React from 'react'
+import React, { useContext } from 'react'
+import GlobalContext from '../context/GlobalContext';
 
 export default function Day({ day, rowIdx }) {
+  const { setSlcDay, setShowEventModal } = useContext(GlobalContext);
+
   const getCurrentDayClass = () => {
     return day.format('DD-MM-YY') === dayjs().format('DD-MM-YY') ?
     'bg-blue-600 text-white rounded-full w-7' : '';
+  }
+
+  const handleClick = () => {
+    setSlcDay(day);
+    setShowEventModal(true);
   }
 
   return (
@@ -15,6 +23,7 @@ export default function Day({ day, rowIdx }) {
           {day.format('DD')}
         </p>
       </header>
+      <div className="flex-1 cursor-pointer" onClick={handleClick}></div>
     </div>
   )
 }
