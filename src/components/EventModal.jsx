@@ -52,7 +52,6 @@ export default function EventModal() {
               className='material-icons-outlined text-gray-400'
                 onClick={() => {
                   dispatchCalEvents({type: "delete", payload: selectedEvt})
-                  setSelectedEvt(null);
                   setShowEventModal(false)}
                 }
               >
